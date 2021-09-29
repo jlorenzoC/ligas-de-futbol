@@ -1,4 +1,5 @@
-# LigasDeFutbol
+# Ligas de fútbol
+Aplicación para gestionar unas ligas de fútbol. Los datos de los que se alimenta la app van a estar proveídos por una api simulada.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
