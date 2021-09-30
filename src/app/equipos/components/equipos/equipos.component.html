@@ -1,1 +1,29 @@
-<p>equipos works!</p>
+<div class="equipos__contenedor">
+  <p-table
+    [value]="(equipos | async) ?? []"
+    selectionMode="single"
+    [(selection)]="equipoSeleccionado"
+    dataKey="id"
+    responsiveLayout="scroll"
+    [style]="{ width: '100%', height: '100%' }"
+    [scrollable]="true"
+    scrollHeight="600px"
+  >
+    <ng-template pTemplate="caption">
+      <h2>Equipos de la liga {{ nombreDeLaLiga | async }}</h2>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Logo</th>
+        <th>Name</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-equipo>
+      <tr [pSelectableRow]="equipo">
+        <p-avatar [image]="equipo['Logo del Equipo']" size="xlarge"></p-avatar>
+        <td>{{ equipo["Nombre del equipo"] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div class="equipos__contenedor">jugadores</div>
