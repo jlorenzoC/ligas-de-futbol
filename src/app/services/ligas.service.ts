@@ -1,3 +1,4 @@
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,4 +13,14 @@ export class LigasService {
   getLigas(): Observable<Liga[]> {
     return this.http.get<Liga[]>('leagues');
   }
+
+  getNombreDeLaLiga(idDeLaLiga: string): Observable<string> {
+    return this.http
+      .get<Liga[]>(`leagues?Identificador=${idDeLaLiga}`)
+      .pipe(map(this.nombreDeLaliga));
+  }
+
+  private nombreDeLaliga = (ligas: Liga[]): string => {
+    return ligas[0]['Nombre De La Liga'];
+  };
 }

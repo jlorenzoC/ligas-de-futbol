@@ -10,7 +10,6 @@ import { LigasComponent } from './components/ligas/ligas.component';
 import { DataViewModule } from 'primeng/dataview';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
-import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @NgModule({
   declarations: [AppComponent, LigasComponent],
@@ -22,7 +21,6 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     DataViewModule,
     CardModule,
     AvatarModule,
-    AvatarGroupModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
