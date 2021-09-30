@@ -1,0 +1,29 @@
+<p-dataView
+  [value]="(ligas | async) ?? []"
+  [style]="{ maxWidth: '774px', maxHeight: '100vh', minHeight: '550px' }"
+  [loading]="(ligas | async) == null"
+>
+  <ng-template pTemplate="header">
+    <div class="ligas__dataview--header">
+      Ligas <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+    </div>
+  </ng-template>
+  <ng-template let-liga pTemplate="listItem">
+    <div class="ligas__dataview--listitem">
+      <p-avatar [image]="liga['Logo de la Liga']" size="xlarge"></p-avatar>
+      {{ liga["Nombre De La Liga"] }}
+    </div>
+  </ng-template>
+  <ng-template let-liga pTemplate="gridItem">
+    <p-card
+      [subheader]="liga['Nombre De La Liga']"
+      [style]="{ width: '200px' }"
+      styleClass="p-card-shadow m-2"
+    >
+      <ng-template pTemplate="header">
+        <p-avatar [image]="liga['Logo de la Liga']" size="xlarge"></p-avatar>
+      </ng-template>
+    </p-card>
+  </ng-template>
+  <ng-template pTemplate="footer">Escoja una liga</ng-template>
+</p-dataView>
