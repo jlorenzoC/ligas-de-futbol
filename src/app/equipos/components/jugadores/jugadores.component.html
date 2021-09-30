@@ -1,0 +1,27 @@
+<p-table
+  [value]="(jugadores | async) ?? []"
+  selectionMode="single"
+  [(selection)]="jugadorSeleccionado"
+  dataKey="id"
+  responsiveLayout="scroll"
+  [style]="{ width: '100%', height: '100%' }"
+  [scrollable]="true"
+  scrollHeight="600px"
+  [loading]="(jugadores | async) == null"
+>
+  <ng-template pTemplate="caption">
+    <h2>Jugadores del equipo {{ nombreDelEquipo }}</h2>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Avatar</th>
+      <th>Nombre</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-jugador>
+    <tr [pSelectableRow]="jugador">
+      <p-avatar [image]="jugador['Avatar']" size="xlarge"></p-avatar>
+      <td>{{ jugador["Nombre del Jugador"] }}</td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -8,6 +8,7 @@
     [style]="{ width: '100%', height: '100%' }"
     [scrollable]="true"
     scrollHeight="600px"
+    [loading]="(equipos | async) == null"
   >
     <ng-template pTemplate="caption">
       <h2>Equipos de la liga {{ nombreDeLaLiga | async }}</h2>
@@ -15,15 +16,24 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Logo</th>
-        <th>Name</th>
+        <th>Nombre</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-equipo>
-      <tr [pSelectableRow]="equipo">
+      <tr
+        [pSelectableRow]="equipo"
+        [routerLink]="[
+          equipo['id'],
+          'jugadores',
+          { nombreDelEquipo: equipo['Nombre del equipo'] }
+        ]"
+      >
         <p-avatar [image]="equipo['Logo del Equipo']" size="xlarge"></p-avatar>
         <td>{{ equipo["Nombre del equipo"] }}</td>
       </tr>
     </ng-template>
   </p-table>
 </div>
-<div class="equipos__contenedor">jugadores</div>
+<div class="equipos__contenedor">
+  <router-outlet></router-outlet>
+</div>
