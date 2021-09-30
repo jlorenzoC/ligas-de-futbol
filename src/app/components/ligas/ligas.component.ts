@@ -2,6 +2,7 @@ import { Liga } from '../../models/liga.model';
 import { LigasService } from './../../services/ligas.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ligas',
@@ -14,6 +15,6 @@ export class LigasComponent implements OnInit {
   constructor(private ligasService: LigasService) {}
 
   ngOnInit(): void {
-    this.ligas = this.ligasService.getLigas();
+    this.ligas = this.ligasService.getLigas().pipe(shareReplay());
   }
 }
