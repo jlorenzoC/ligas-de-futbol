@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptor } from './services/app.interceptor';
+import { LigasComponent } from './components/ligas/ligas.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LigasComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
