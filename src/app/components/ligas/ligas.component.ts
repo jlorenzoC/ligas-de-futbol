@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-ligas',
   templateUrl: './ligas.component.html',
-  styleUrls: ['./ligas.component.sass'],
+  styleUrls: ['./ligas.component.scss'],
 })
 export class LigasComponent implements OnInit {
   ligas: Observable<Liga[]> = of([]);
