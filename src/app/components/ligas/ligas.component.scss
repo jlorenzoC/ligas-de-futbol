@@ -9,8 +9,23 @@
   align-items: center;
   padding: 10px;
   width: 100%;
+  &:hover {
+    @extend .ligas__elevacion--onhover;
+  }
 }
 
-:host::ng-deep .p-dataview-content .p-grid{
-    justify-content: center;
+:host::ng-deep .ligas__dataview--griditem {
+  &:hover {
+    @extend .ligas__elevacion--onhover;
+  }
+}
+
+.ligas__elevacion--onhover {
+  transform: scale(1.03);
+  transition: transform 0.2s;
+  background-color: #f0f0f0;
+}
+
+:host::ng-deep .p-dataview-content .p-grid {
+  justify-content: center;
 }
