@@ -5,6 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'ligas' },
   { path: 'ligas', component: LigasComponent },
+  {
+    path: 'ligas/:idDeLaLiga',
+    loadChildren: () =>
+      import('./equipos/equipos.module').then((m) => m.EquiposModule),
+  },
 ];
 
 @NgModule({
