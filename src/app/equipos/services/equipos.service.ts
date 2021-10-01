@@ -12,4 +12,8 @@ export class EquiposService {
   getEquiposPorLiga(idDeLaLiga: string): Observable<Equipo[]> {
     return this.http.get<Equipo[]>(`teams?Liga=${idDeLaLiga}`);
   }
+
+  crearEquipo(equipo: Equipo): Observable<any> {
+    return this.http.post('teams', equipo);
+  }
 }
