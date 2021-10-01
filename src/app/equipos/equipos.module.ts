@@ -13,6 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [EquiposComponent, JugadoresComponent],
@@ -28,6 +30,8 @@ import { TooltipModule } from 'primeng/tooltip';
     ReactiveFormsModule,
     ProgressSpinnerModule,
     TooltipModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
 })
 export class EquiposModule {}

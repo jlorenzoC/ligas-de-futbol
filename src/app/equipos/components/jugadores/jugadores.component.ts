@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { nanoid } from 'nanoid';
 import { shareReplay } from 'rxjs/operators';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-jugadores',
@@ -21,11 +22,13 @@ export class JugadoresComponent implements OnInit, OnDestroy {
   creando = false;
   dialogoAbierto = false;
   suscripcion!: Subscription;
+  suscripcionAEliminarJugador!: Subscription;
 
   constructor(
     private jugadoresService: JugadoresService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,38 @@ export class JugadoresComponent implements OnInit, OnDestroy {
       .crearJugador(this.formularioDeJugador.value)
       .subscribe(this.suscripcionACrearJugador);
   }
+
+  confirmarEliminarJugador(jugador: Jugador) {
+    this.confirmationService.confirm({
+      key: 'dialogoDeConfirmacionParaEliminarJugador',
+      message:
+        'Seguro de eliminar al jugador ' + jugador['Nombre del Jugador'] + '?',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass:
+        'p-button-outlined p-button-rounded p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined p-button-rounded',
+      accept: () => {
+        this.eliminarJugador(jugador);
+      },
+    });
+  }
+
+  eliminarJugador(jugador: Jugador) {
+    this.suscripcionAEliminarJugador = this.jugadoresService
+      .eliminarJugador(jugador)
+      .subscribe(this.suscipcionAEliminarJugador);
+  }
+
+  private suscipcionAEliminarJugador = () => {
+    next: {
+      this.getJugadoresDelEquipo();
+    }
+    error: {
+      this.creando = false;
+      this.dialogoAbierto = false;
+    }
+  };
 
   private suscripcionACrearJugador = () => {
     next: {
@@ -79,5 +114,6 @@ export class JugadoresComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.suscripcion?.unsubscribe();
+    this.suscripcionAEliminarJugador?.unsubscribe();
   }
 }
