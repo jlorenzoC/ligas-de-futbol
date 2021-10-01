@@ -33,8 +33,6 @@ export class EquiposComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(nanoid());
-
     this.idDeLaLiga = this.route.snapshot.params.idDeLaLiga;
 
     this.formularioDeEquipo = this.fb.group({
