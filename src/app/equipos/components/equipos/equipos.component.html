@@ -85,7 +85,11 @@
     (activate)="rutaActivada()"
   >
   </router-outlet>
-  <h3 class="flex h-full" style="margin: 0 1.5rem" *ngIf="mostrarMensaje">
+  <h3
+    class="text-xs sm:text-lg flex h-full"
+    style="margin: 0 1.5rem"
+    *ngIf="mostrarMensaje"
+  >
     Seleccione un equipo para ver sus jugadores
   </h3>
 </div>
