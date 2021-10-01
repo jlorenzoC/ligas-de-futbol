@@ -31,9 +31,9 @@
             pButton
             pRipple
             type="button"
-            icon="pi pi-pencil"
+            icon="pi pi-plus"
             class="p-button-outlined p-button-rounded p-button-success"
-            (click)="abrirDialogo()"
+            (click)="creando = true; abrirDialogo()"
             pTooltip="De alta a un equipo"
           ></button>
         </div>
@@ -56,6 +56,15 @@
       >
         <p-avatar [image]="equipo['Logo del Equipo']" size="xlarge"></p-avatar>
         <td>{{ equipo["Nombre del equipo"] }}</td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-pencil"
+          class="p-button-outlined p-button-rounded p-button-success mr-2"
+          [pTooltip]="'Editar ' + equipo['Nombre del equipo']"
+          (click)="creando = false; onEditarEquipo(equipo, $event)"
+        ></button>
         <button
           pButton
           pRipple
@@ -85,7 +94,7 @@
   [breakpoints]="{ '1200px': '40vw', '960px': '50vw', '640px': '100vw' }"
   [style]="{ width: '25vw' }"
   [modal]="true"
-  header="Crear equipo"
+  [header]="creando ? 'Crear equipo' : 'Editar equipo'"
   [(visible)]="dialogoAbierto"
 >
   <div class="text-center" *ngIf="cargando; else form">
@@ -117,10 +126,10 @@
         pButton
         pRipple
         type="button"
-        label="Crear"
-        icon="pi pi-plus"
+        [label]="creando ? 'Crear' : 'Editar'"
+        [icon]="creando ? 'pi pi-plus' : 'pi pi-pencil'"
         class="p-button-outlined p-button-rounded p-button-success"
-        (click)="crearEquipo()"
+        (click)="creando ? crearEquipo() : editarEquipo()"
       ></button>
     </ng-template>
   </ng-template>
