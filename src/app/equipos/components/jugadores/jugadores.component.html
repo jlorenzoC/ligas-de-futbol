@@ -20,6 +20,7 @@
           icon="pi pi-pencil"
           class="p-button-outlined p-button-rounded p-button-success"
           pTooltip="De alta a un jugador"
+          (click)="abrirDialogo()"
         ></button>
       </div>
     </div>
@@ -37,3 +38,48 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p-dialog
+  [breakpoints]="{ '1200px': '40vw', '960px': '50vw', '640px': '100vw' }"
+  [style]="{ width: '25vw' }"
+  [modal]="true"
+  header="Crear jugador"
+  [(visible)]="dialogoAbierto"
+>
+  <div class="text-center" *ngIf="creando; else form">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <ng-template #form>
+    <form [formGroup]="formularioDeJugador" class="p-fluid">
+      <div class="input__container">
+        <label for="nombre-de-jugador">Nombre del Jugador</label>
+        <input
+          formControlName="Nombre del Jugador"
+          id="nombre-de-jugador"
+          type="text"
+          pInputText
+        />
+        <small
+          *ngIf="
+            formularioDeJugador.controls['Nombre del Jugador'].invalid &&
+            formularioDeJugador.controls['Nombre del Jugador'].touched
+          "
+          class="p-error"
+          >Nombre del jugador requerido
+        </small>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button
+        [disabled]="formularioDeJugador.invalid"
+        pButton
+        pRipple
+        type="button"
+        label="Crear"
+        icon="pi pi-plus"
+        class="p-button-outlined p-button-rounded p-button-success"
+        (click)="crearJugador()"
+      ></button>
+    </ng-template>
+  </ng-template>
+</p-dialog>

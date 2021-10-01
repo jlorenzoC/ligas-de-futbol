@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { nanoid } from 'nanoid';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Equipo } from '../../models/equipo.model';
 import { Liga } from './../../../models/liga.model';
 import { LigasService } from './../../../services/ligas.service';
@@ -13,7 +13,7 @@ import { EquiposService } from './../../services/equipos.service';
   templateUrl: './equipos.component.html',
   styleUrls: ['./equipos.component.scss'],
 })
-export class EquiposComponent implements OnInit {
+export class EquiposComponent implements OnInit, OnDestroy {
   equipos: Observable<Equipo[]> = of([]);
   equipoSeleccionado = new Equipo();
   nombreDeLaLiga: Observable<string> = of('');
@@ -23,6 +23,7 @@ export class EquiposComponent implements OnInit {
   ligas: Liga[] = [];
   idDeLaLiga = '';
   creando = false;
+  suscripcion!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,8 +45,6 @@ export class EquiposComponent implements OnInit {
       Liga: this.idDeLaLiga,
     });
 
-    this.formularioDeEquipo.valueChanges.subscribe(console.log);
-
     this.getNombreDeLaLiga();
     this.getEquipos();
   }
@@ -65,18 +64,22 @@ export class EquiposComponent implements OnInit {
   crearEquipo() {
     this.creando = true;
     this.formularioDeEquipo.controls.id.setValue(nanoid());
-    this.equiposService.crearEquipo(this.formularioDeEquipo.value).subscribe(
-      (respuesta) => {
-        this.creando = false;
-        this.dialogoAbierto = false;
-        this.getEquipos();
-      },
-      (error) => {
-        this.creando = false;
-        this.dialogoAbierto = false;
-      }
-    );
+    this.suscripcion = this.equiposService
+      .crearEquipo(this.formularioDeEquipo.value)
+      .subscribe(this.suscribirSeACrearEquipo);
   }
+
+  private suscribirSeACrearEquipo = () => {
+    next: {
+      this.creando = false;
+      this.dialogoAbierto = false;
+      this.getEquipos();
+    }
+    error: {
+      this.creando = false;
+      this.dialogoAbierto = false;
+    }
+  };
 
   private getNombreDeLaLiga() {
     this.nombreDeLaLiga = this.ligasService.getNombreDeLaLiga(this.idDeLaLiga);
@@ -84,5 +87,9 @@ export class EquiposComponent implements OnInit {
 
   private getEquipos() {
     this.equipos = this.equiposService.getEquiposPorLiga(this.idDeLaLiga);
+  }
+
+  ngOnDestroy(): void {
+    this.suscripcion.unsubscribe();
   }
 }

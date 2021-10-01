@@ -13,4 +13,8 @@ export class JugadoresService {
   getJugadoresDelEquipo(idDelEquipo: string): Observable<Jugador[]> {
     return this.http.get<Jugador[]>(`players?teamId=${idDelEquipo}`);
   }
+
+  crearJugador(jugador: Jugador): Observable<any> {
+    return this.http.post('players', jugador);
+  }
 }
