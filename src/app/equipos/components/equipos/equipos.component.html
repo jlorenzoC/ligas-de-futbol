@@ -61,8 +61,8 @@
 <div class="equipos__contenedor">
   <router-outlet (deactivate)="rutaDesactivada()" (activate)="rutaActivada()">
   </router-outlet>
-  <h3 style="font-family: cursive" *ngIf="mostrarMensaje">
-    <- Seleccione un equipo para ver sus jugadores
+  <h3 style="margin: 0 1.5rem" *ngIf="mostrarMensaje">
+    Seleccione un equipo para ver sus jugadores
   </h3>
 </div>
 
