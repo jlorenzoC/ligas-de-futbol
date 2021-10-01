@@ -17,4 +17,8 @@ export class JugadoresService {
   crearJugador(jugador: Jugador): Observable<any> {
     return this.http.post('players', jugador);
   }
+
+  eliminarJugador(jugador: Jugador) {
+    return this.http.delete(`players/${jugador.id}`);
+  }
 }

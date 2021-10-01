@@ -22,7 +22,9 @@
             routerLink="/ligas"
             pTooltip="Ver las ligas"
           ></button>
-          <h2>Equipos de la liga {{ nombreDeLaLiga | async }}</h2>
+          <h2 class="text-sm md:text-lg">
+            Equipos de la liga {{ nombreDeLaLiga | async }}
+          </h2>
         </div>
         <div>
           <button
