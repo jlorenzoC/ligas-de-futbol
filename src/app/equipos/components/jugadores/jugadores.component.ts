@@ -1,12 +1,12 @@
-import { Observable, of, Subscription } from 'rxjs';
-import { JugadoresService } from './../../services/jugadores.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Jugador } from '../../models/jugador.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { nanoid } from 'nanoid';
-import { shareReplay } from 'rxjs/operators';
 import { ConfirmationService } from 'primeng/api';
+import { Observable, of, Subscription } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
+import { Jugador } from '../../models/jugador.model';
+import { JugadoresService } from './../../services/jugadores.service';
 
 @Component({
   selector: 'app-jugadores',
@@ -19,7 +19,7 @@ export class JugadoresComponent implements OnInit, OnDestroy {
   nombreDelEquipo = '';
   idDelEquipo = '';
   formularioDeJugador = new FormGroup({});
-  creando = false;
+  cargando = false;
   dialogoAbierto = false;
   suscripcion!: Subscription;
   suscripcionAEliminarJugador!: Subscription;
@@ -45,7 +45,7 @@ export class JugadoresComponent implements OnInit, OnDestroy {
   }
 
   crearJugador() {
-    this.creando = true;
+    this.cargando = true;
     this.formularioDeJugador.controls.id.setValue(nanoid());
     this.suscripcion = this.jugadoresService
       .crearJugador(this.formularioDeJugador.value)
@@ -54,7 +54,7 @@ export class JugadoresComponent implements OnInit, OnDestroy {
 
   confirmarEliminarJugador(jugador: Jugador) {
     this.confirmationService.confirm({
-      key: 'dialogoDeConfirmacionParaEliminarJugador',
+      key: 'dialogoDeConfirmacionParaEliminar',
       message:
         'Seguro de eliminar al jugador ' + jugador['Nombre del Jugador'] + '?',
       acceptLabel: 'Si',
@@ -79,24 +79,24 @@ export class JugadoresComponent implements OnInit, OnDestroy {
       this.getJugadoresDelEquipo();
     }
     error: {
-      this.creando = false;
+      this.cargando = false;
       this.dialogoAbierto = false;
     }
   };
 
   private suscripcionACrearJugador = () => {
     next: {
-      this.creando = false;
+      this.cargando = false;
       this.dialogoAbierto = false;
       this.getJugadoresDelEquipo();
     }
     error: {
-      this.creando = false;
+      this.cargando = false;
       this.dialogoAbierto = false;
     }
   };
 
-  private getJugadoresDelEquipo() {
+  getJugadoresDelEquipo() {
     this.jugadores = this.jugadoresService
       .getJugadoresDelEquipo(this.idDelEquipo)
       .pipe(shareReplay());

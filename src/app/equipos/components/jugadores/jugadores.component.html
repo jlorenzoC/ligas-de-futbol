@@ -57,7 +57,7 @@
   header="Crear jugador"
   [(visible)]="dialogoAbierto"
 >
-  <div class="text-center" *ngIf="creando; else form">
+  <div class="text-center" *ngIf="cargando; else form">
     <p-progressSpinner></p-progressSpinner>
   </div>
   <ng-template #form>
@@ -105,5 +105,5 @@
   [style]="{ width: '30vw' }"
   header="Confirmación"
   icon="pi pi-exclamation-triangle"
-  key="dialogoDeConfirmacionParaEliminarJugador"
+  key="dialogoDeConfirmacionParaEliminar"
 ></p-confirmDialog>

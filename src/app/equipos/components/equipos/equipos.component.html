@@ -56,12 +56,25 @@
       >
         <p-avatar [image]="equipo['Logo del Equipo']" size="xlarge"></p-avatar>
         <td>{{ equipo["Nombre del equipo"] }}</td>
+        <button
+          pButton
+          pRipple
+          type="button"
+          icon="pi pi-trash"
+          class="p-button-outlined p-button-rounded p-button-danger mr-2"
+          [pTooltip]="'Eliminar ' + equipo['Nombre del equipo']"
+          (click)="confirmarEliminarEquipo(equipo, $event)"
+        ></button>
       </tr>
     </ng-template>
   </p-table>
 </div>
 <div class="equipos__contenedor">
-  <router-outlet (deactivate)="rutaDesactivada()" (activate)="rutaActivada()">
+  <router-outlet
+    #routerOutlet
+    (deactivate)="rutaDesactivada()"
+    (activate)="rutaActivada()"
+  >
   </router-outlet>
   <h3 style="margin: 0 1.5rem" *ngIf="mostrarMensaje">
     Seleccione un equipo para ver sus jugadores
@@ -75,7 +88,7 @@
   header="Crear equipo"
   [(visible)]="dialogoAbierto"
 >
-  <div class="text-center" *ngIf="creando; else form">
+  <div class="text-center" *ngIf="cargando; else form">
     <p-progressSpinner></p-progressSpinner>
   </div>
   <ng-template #form>
