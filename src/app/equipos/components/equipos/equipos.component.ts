@@ -1,7 +1,9 @@
+import { shareReplay } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { nanoid } from 'nanoid';
+import { ConfirmationService } from 'primeng/api';
 import { Observable, of, Subscription } from 'rxjs';
 import { Equipo } from '../../models/equipo.model';
 import { Liga } from './../../../models/liga.model';
@@ -22,14 +24,16 @@ export class EquiposComponent implements OnInit, OnDestroy {
   formularioDeEquipo: FormGroup = new FormGroup({});
   ligas: Liga[] = [];
   idDeLaLiga = '';
-  creando = false;
+  cargando = false;
   suscripcion!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private equiposService: EquiposService,
     private ligasService: LigasService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +56,7 @@ export class EquiposComponent implements OnInit, OnDestroy {
   }
 
   rutaDesactivada() {
+    this;
     this.mostrarMensaje = true;
   }
 
@@ -60,23 +65,57 @@ export class EquiposComponent implements OnInit, OnDestroy {
   }
 
   crearEquipo() {
-    this.creando = true;
+    this.cargando = true;
     this.formularioDeEquipo.controls.id.setValue(nanoid());
     this.suscripcion = this.equiposService
       .crearEquipo(this.formularioDeEquipo.value)
       .subscribe(this.suscribirSeACrearEquipo);
   }
 
+  confirmarEliminarEquipo(equipo: Equipo, e: MouseEvent) {
+    e.stopPropagation();
+    this.confirmationService.confirm({
+      key: 'dialogoDeConfirmacionParaEliminar',
+      message:
+        'Seguro de eliminar al equipo ' + equipo['Nombre del equipo'] + '?',
+      acceptLabel: 'Si',
+      rejectLabel: 'No',
+      acceptButtonStyleClass:
+        'p-button-outlined p-button-rounded p-button-danger',
+      rejectButtonStyleClass: 'p-button-outlined p-button-rounded',
+      accept: () => {
+        this.eliminarEquipo(equipo);
+      },
+    });
+  }
+
+  private eliminarEquipo(equipo: Equipo) {
+    this.cargando = true;
+    this.equiposService.eliminarEquipo(equipo).subscribe(
+      (resp) => {
+        this.setEstadoARespuestaExitosa();
+        this.router.navigate(['/ligas', this.idDeLaLiga, 'equipos']);
+      },
+      (error) => this.setEstadoARespuestaConError()
+    );
+  }
+
+  private setEstadoARespuestaExitosa() {
+    this.cargando = false;
+    this.dialogoAbierto = false;
+    this.getEquipos();
+  }
+
+  private setEstadoARespuestaConError() {
+    this.cargando = false;
+    this.dialogoAbierto = false;
+  }
+
   private suscribirSeACrearEquipo = () => {
     next: {
-      this.creando = false;
-      this.dialogoAbierto = false;
-      this.getEquipos();
+      this.setEstadoARespuestaExitosa();
     }
-    error: {
-      this.creando = false;
-      this.dialogoAbierto = false;
-    }
+    error: this.setEstadoARespuestaConError();
   };
 
   private getNombreDeLaLiga() {
@@ -84,7 +123,9 @@ export class EquiposComponent implements OnInit, OnDestroy {
   }
 
   private getEquipos() {
-    this.equipos = this.equiposService.getEquiposPorLiga(this.idDeLaLiga);
+    this.equipos = this.equiposService
+      .getEquiposPorLiga(this.idDeLaLiga)
+      .pipe(shareReplay());
   }
 
   ngOnDestroy(): void {
