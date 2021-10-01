@@ -102,21 +102,20 @@ export class EquiposComponent implements OnInit, OnDestroy {
   editarEquipo() {
     this.equiposService
       .editarEquipo(this.formularioDeEquipo.value)
-      .subscribe((resp) => {
-        console.log(resp);
-
+      .subscribe((equipo: Equipo) => {
         this.setEstadoARespuestaExitosa();
-        this.router.navigate([
-          '/ligas',
-          this.idDeLaLiga,
-          'equipos',
-          this.formularioDeEquipo.controls.id.value,
-          'jugadores',
-          {
-            nombreDelEquipo:
-              this.formularioDeEquipo.controls['Nombre del equipo'].value,
-          },
-        ]);
+        if (this.equipoSeleccionado?.id != null) {
+          this.router.navigate([
+            '/ligas',
+            this.idDeLaLiga,
+            'equipos',
+            equipo.id,
+            'jugadores',
+            {
+              nombreDelEquipo: equipo['Nombre del equipo'],
+            },
+          ]);
+        }
       });
   }
 
