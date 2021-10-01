@@ -26,6 +26,7 @@ export class EquiposComponent implements OnInit, OnDestroy {
   idDeLaLiga = '';
   cargando = false;
   suscripcion!: Subscription;
+  creando = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,6 +88,36 @@ export class EquiposComponent implements OnInit, OnDestroy {
         this.eliminarEquipo(equipo);
       },
     });
+  }
+
+  onEditarEquipo(equipo: Equipo, e: MouseEvent) {
+    this.formularioDeEquipo.controls['Nombre del equipo'].setValue(
+      equipo['Nombre del equipo']
+    );
+    this.formularioDeEquipo.controls.id.setValue(equipo.id);
+    this.dialogoAbierto = true;
+    e.stopPropagation();
+  }
+
+  editarEquipo() {
+    this.equiposService
+      .editarEquipo(this.formularioDeEquipo.value)
+      .subscribe((resp) => {
+        console.log(resp);
+
+        this.setEstadoARespuestaExitosa();
+        this.router.navigate([
+          '/ligas',
+          this.idDeLaLiga,
+          'equipos',
+          this.formularioDeEquipo.controls.id.value,
+          'jugadores',
+          {
+            nombreDelEquipo:
+              this.formularioDeEquipo.controls['Nombre del equipo'].value,
+          },
+        ]);
+      });
   }
 
   private eliminarEquipo(equipo: Equipo) {

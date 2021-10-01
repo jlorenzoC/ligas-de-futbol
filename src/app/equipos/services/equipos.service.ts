@@ -35,6 +35,10 @@ export class EquiposService {
     );
   }
 
+  editarEquipo(equipo: Equipo): Observable<any> {
+    return this.http.put(`teams/${equipo.id}`, equipo);
+  }
+
   private getForkJoinDeObservablesParaEliminarJugadoresYEquipo = (
     jugadores: Jugador[],
     equipo: Equipo
