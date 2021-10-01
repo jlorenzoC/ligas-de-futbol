@@ -73,7 +73,7 @@
   header="Crear equipo"
   [(visible)]="dialogoAbierto"
 >
-  <div *ngIf="creando; else form">
+  <div class="text-center" *ngIf="true; else form">
     <p-progressSpinner></p-progressSpinner>
   </div>
   <ng-template #form>
