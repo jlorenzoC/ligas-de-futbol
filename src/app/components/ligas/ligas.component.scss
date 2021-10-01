@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 .ligas__dataview--header {
   display: flex;
   justify-content: space-between;
@@ -28,4 +32,10 @@
 
 :host::ng-deep .p-dataview-content .p-grid {
   justify-content: center;
+}
+
+@media (min-device-width: 768px) {
+  :host {
+    width: 80%;
+  }
 }

@@ -1,6 +1,6 @@
 <p-dataView
   [value]="(ligas | async) ?? []"
-  [style]="{ maxWidth: '774px', maxHeight: '100vh', minHeight: '550px' }"
+  [style]="{ width: '100%', maxHeight: '100vh', minHeight: '550px' }"
   [loading]="(ligas | async) == null"
 >
   <ng-template pTemplate="header">
