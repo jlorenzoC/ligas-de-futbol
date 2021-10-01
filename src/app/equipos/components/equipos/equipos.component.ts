@@ -90,6 +90,6 @@ export class EquiposComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.suscripcion) this.suscripcion.unsubscribe();
+    this.suscripcion?.unsubscribe();
   }
 }

@@ -78,6 +78,6 @@ export class JugadoresComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.suscripcion) this.suscripcion.unsubscribe();
+    this.suscripcion?.unsubscribe();
   }
 }
