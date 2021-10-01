@@ -11,7 +11,31 @@
     [loading]="(equipos | async) == null"
   >
     <ng-template pTemplate="caption">
-      <h2>Equipos de la liga {{ nombreDeLaLiga | async }}</h2>
+      <div class="flex justify-content-between">
+        <div class="flex">
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-arrow-left"
+            class="p-button-rounded p-button-info p-button-text"
+            routerLink="/ligas"
+            pTooltip="Ver las ligas"
+          ></button>
+          <h2>Equipos de la liga {{ nombreDeLaLiga | async }}</h2>
+        </div>
+        <div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-outlined p-button-rounded p-button-success"
+            (click)="abrirDialogo()"
+            pTooltip="De alta a un equipo"
+          ></button>
+        </div>
+      </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -35,5 +59,54 @@
   </p-table>
 </div>
 <div class="equipos__contenedor">
-  <router-outlet></router-outlet>
+  <router-outlet (deactivate)="rutaDesactivada()" (activate)="rutaActivada()">
+  </router-outlet>
+  <h3 style="font-family: cursive" *ngIf="mostrarMensaje">
+    <- Seleccione un equipo para ver sus jugadores
+  </h3>
 </div>
+
+<p-dialog
+  [breakpoints]="{ '1200px': '40vw', '960px': '50vw', '640px': '100vw' }"
+  [style]="{ width: '25vw' }"
+  [modal]="true"
+  header="Crear equipo"
+  [(visible)]="dialogoAbierto"
+>
+  <div *ngIf="creando; else form">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <ng-template #form>
+    <form [formGroup]="formularioDeEquipo" class="p-fluid">
+      <div class="input__container">
+        <label for="nombre-de-equipo">Nombre del equipo</label>
+        <input
+          formControlName="Nombre del equipo"
+          id="nombre-de-equipo"
+          type="text"
+          pInputText
+        />
+        <small
+          *ngIf="
+            formularioDeEquipo.controls['Nombre del equipo'].invalid &&
+            formularioDeEquipo.controls['Nombre del equipo'].touched
+          "
+          class="p-error"
+          >Nombre del equipo requerido
+        </small>
+      </div>
+    </form>
+    <ng-template pTemplate="footer">
+      <button
+        [disabled]="formularioDeEquipo.invalid"
+        pButton
+        pRipple
+        type="button"
+        label="Crear"
+        icon="pi pi-plus"
+        class="p-button-outlined p-button-rounded p-button-success"
+        (click)="crearEquipo()"
+      ></button>
+    </ng-template>
+  </ng-template>
+</p-dialog>
