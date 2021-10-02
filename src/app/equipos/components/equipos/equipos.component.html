@@ -61,7 +61,7 @@
           pRipple
           type="button"
           icon="pi pi-pencil"
-          class="p-button-outlined p-button-rounded p-button-success mr-2"
+          class="p-button-text p-button-rounded p-button-success mr-2"
           [pTooltip]="'Editar ' + equipo['Nombre del equipo']"
           tooltipPosition="left"
           (click)="creando = false; onEditarEquipo(equipo, $event)"
@@ -71,7 +71,7 @@
           pRipple
           type="button"
           icon="pi pi-trash"
-          class="p-button-outlined p-button-rounded p-button-danger mr-2"
+          class="p-button-text p-button-rounded p-button-danger mr-2"
           [pTooltip]="'Eliminar ' + equipo['Nombre del equipo']"
           (click)="confirmarEliminarEquipo(equipo, $event)"
         ></button>

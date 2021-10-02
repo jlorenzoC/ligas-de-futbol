@@ -14,6 +14,10 @@ export class LigasService {
     return this.http.get<Liga[]>('leagues');
   }
 
+  getLiga(idDeLaLiga: string): Observable<Liga[]> {
+    return this.http.get<Liga[]>(`leagues?Identificador=${idDeLaLiga}`);
+  }
+
   getNombreDeLaLiga(idDeLaLiga: string): Observable<string> {
     return this.http
       .get<Liga[]>(`leagues?Identificador=${idDeLaLiga}`)

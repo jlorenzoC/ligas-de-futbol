@@ -1,5 +1,42 @@
 :host {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+p-dataView {
+  height: 100%;
+}
+
+.ligas__buscador {
+  border-radius: 30px;
+  position: relative;
+  width: 80%;
+}
+
+.ligas__buscador--icono {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 15px;
+}
+
+:host::ng-deep p-autoComplete {
+  width: 100%;
+  span {
+    width: 100%;
+    input {
+      width: 100%;
+      border-radius: 30px;
+      height: 50px;
+      padding-left: 40px;
+    }
+  }
 }
 
 .ligas__dataview--header {
