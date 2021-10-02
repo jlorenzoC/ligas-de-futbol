@@ -100,6 +100,7 @@ export class EquiposComponent implements OnInit, OnDestroy {
   }
 
   editarEquipo() {
+    this.cargando = true;
     this.equiposService
       .editarEquipo(this.formularioDeEquipo.value)
       .subscribe((equipo: Equipo) => {
