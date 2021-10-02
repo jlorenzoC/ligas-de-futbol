@@ -10,6 +10,11 @@ import { LigasComponent } from './components/ligas/ligas.component';
 import { DataViewModule } from 'primeng/dataview';
 import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FormsModule } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [AppComponent, LigasComponent],
@@ -21,6 +26,11 @@ import { AvatarModule } from 'primeng/avatar';
     DataViewModule,
     CardModule,
     AvatarModule,
+    ButtonModule,
+    TooltipModule,
+    AutoCompleteModule,
+    FormsModule,
+    ProgressSpinnerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },

@@ -39,6 +39,10 @@ export class EquiposService {
     return this.http.put(`teams/${equipo.id}`, equipo);
   }
 
+  getEquipoPorId(equipoId: string): Observable<Equipo[]> {
+    return this.http.get<Equipo[]>(`teams?id=${equipoId}`);
+  }
+
   private getForkJoinDeObservablesParaEliminarJugadoresYEquipo = (
     jugadores: Jugador[],
     equipo: Equipo

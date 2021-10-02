@@ -42,7 +42,7 @@
         pRipple
         type="button"
         icon="pi pi-pencil"
-        class="p-button-outlined p-button-rounded p-button-success mr-2"
+        class="p-button-text p-button-rounded p-button-success mr-2"
         [pTooltip]="'Editar ' + jugador['Nombre del Jugador']"
         tooltipPosition="left"
         (click)="creando = false; onEditarJugador(jugador, $event)"
@@ -52,7 +52,7 @@
         pRipple
         type="button"
         icon="pi pi-trash"
-        class="p-button-outlined p-button-rounded p-button-danger mr-2"
+        class="p-button-text p-button-rounded p-button-danger mr-2"
         [pTooltip]="'Dar baja a ' + jugador['Nombre del Jugador']"
         (click)="confirmarEliminarJugador(jugador)"
       ></button>

@@ -1,33 +1,88 @@
-<p-dataView
-  [value]="(ligas | async) ?? []"
-  [style]="{ width: '100%', maxHeight: '100vh', minHeight: '550px' }"
-  [loading]="(ligas | async) == null"
+<div class="mt-5">
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-user"
+    [ngClass]="{ 'p-button-outlined': !buscarFichaDelJugador }"
+    class="p-button-rounded p-button-info"
+    [pTooltip]="!buscarFichaDelJugador ? 'Buscar ficha del Jugador' : ''"
+    (click)="
+      buscarFichaDelJugador = !buscarFichaDelJugador; mostrarLaFichaDelJugador()
+    "
+  ></button>
+</div>
+<div
+  class="ligas__buscador shadow-8 flex w-10 sm:w-6 justify-content-center"
+  *ngIf="buscarFichaDelJugador"
+>
+  <i class="ligas__buscador--icono pi pi-search"></i>
+  <p-autoComplete
+    [(ngModel)]="jugadorSeleccionado"
+    [suggestions]="jugadoresFiltrados"
+    (completeMethod)="filtrarJugadores($event)"
+    [field]="'Nombre del Jugador'"
+    (onSelect)="setFichaDelJugador()"
+    placeholder="Buscar jugador ..."
+  ></p-autoComplete>
+</div>
+<p-card
+  *ngIf="mostrarFicha"
+  [header]="nombreDelJugadorSeleccionado"
+  [style]="{ maxWidth: '360px', maxHeight: '400px' }"
 >
   <ng-template pTemplate="header">
-    <div class="ligas__dataview--header">
-      Ligas <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-    </div>
+    <img
+      class="w-4"
+      alt="Foto del jugador"
+      [src]="fotoDelJugadorSeleccionado"
+    />
   </ng-template>
-  <ng-template let-liga pTemplate="listItem">
-    <div
-      [routerLink]="[liga.Identificador]"
-      class="ligas__dataview--listitem cursor-pointer"
-    >
-      <p-avatar [image]="liga['Logo de la Liga']" size="xlarge"></p-avatar>
-      {{ liga["Nombre De La Liga"] }}
-    </div>
-  </ng-template>
-  <ng-template let-liga pTemplate="gridItem">
-    <p-card
-      [routerLink]="[liga.Identificador]"
-      [subheader]="liga['Nombre De La Liga']"
-      [style]="{ width: '200px' }"
-      styleClass="p-card-shadow m-2 cursor-pointer ligas__dataview--griditem"
-    >
-      <ng-template pTemplate="header">
+  <h3>Liga</h3>
+  {{ ligaDelJugador["Nombre De La Liga"] }}
+  <h3>Equipo</h3>
+  {{ equipoDelJugador["Nombre del equipo"] }}
+</p-card>
+<div
+  class="flex w-full h-full justify-content-center align-items-center"
+  *ngIf="(ligas | async) == null; else dataView"
+>
+  <p-progressSpinner></p-progressSpinner>
+</div>
+
+<ng-template #dataView>
+  <p-dataView
+    *ngIf="!buscarFichaDelJugador"
+    [value]="(ligas | async) ?? []"
+    [style]="{ maxHeight: '450px' }"
+    [loading]="(ligas | async) == null"
+  >
+    <ng-template pTemplate="header">
+      <div class="ligas__dataview--header">
+        Ligas <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+      </div>
+    </ng-template>
+    <ng-template let-liga pTemplate="listItem">
+      <div
+        [routerLink]="[liga.Identificador]"
+        class="ligas__dataview--listitem cursor-pointer"
+      >
         <p-avatar [image]="liga['Logo de la Liga']" size="xlarge"></p-avatar>
-      </ng-template>
-    </p-card>
-  </ng-template>
-  <ng-template pTemplate="footer">Escoja una liga</ng-template>
-</p-dataView>
+        {{ liga["Nombre De La Liga"] }}
+      </div>
+    </ng-template>
+    <ng-template let-liga pTemplate="gridItem">
+      <p-card
+        [routerLink]="[liga.Identificador]"
+        [subheader]="liga['Nombre De La Liga']"
+        [style]="{ width: '200px' }"
+        styleClass="p-card-shadow m-2 cursor-pointer ligas__dataview--griditem"
+      >
+        <ng-template pTemplate="header">
+          <p-avatar [image]="liga['Logo de la Liga']" size="xlarge"></p-avatar>
+        </ng-template>
+      </p-card>
+    </ng-template>
+    <ng-template pTemplate="footer">Escoja una liga</ng-template>
+  </p-dataView>
+</ng-template>

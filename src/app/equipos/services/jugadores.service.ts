@@ -24,4 +24,12 @@ export class JugadoresService {
   editarJugador(jugador: Jugador): Observable<Jugador> {
     return this.http.put<Jugador>(`players/${jugador.id}`, jugador);
   }
+
+  filtrarJugadoresPorNombre(
+    cadenaDeParaFiltrarNombreDelJugador: string
+  ): Observable<Jugador[]> {
+    return this.http.get<Jugador[]>(
+      `players?Nombre del Jugador_like=${cadenaDeParaFiltrarNombreDelJugador}`
+    );
+  }
 }
