@@ -130,8 +130,8 @@
         pButton
         pRipple
         type="button"
-        [label]="creando ? 'Crear' : 'Editar'"
-        [icon]="creando ? 'pi pi-plus' : 'pi pi-pencil'"
+        [label]="creando ? 'Crear' : 'Guardar'"
+        [icon]="creando ? 'pi pi-plus' : 'pi pi-save'"
         class="p-button-outlined p-button-rounded p-button-success"
         (click)="creando ? crearEquipo() : editarEquipo()"
       ></button>
