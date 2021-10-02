@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Equipo } from '../models/equipo.model';
 import { Jugador } from '../models/jugador.model';
 
 @Injectable({
@@ -20,5 +19,9 @@ export class JugadoresService {
 
   eliminarJugador(jugador: Jugador) {
     return this.http.delete(`players/${jugador.id}`);
+  }
+
+  editarJugador(jugador: Jugador): Observable<Jugador> {
+    return this.http.put<Jugador>(`players/${jugador.id}`, jugador);
   }
 }

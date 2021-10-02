@@ -23,6 +23,7 @@ export class JugadoresComponent implements OnInit, OnDestroy {
   dialogoAbierto = false;
   suscripcion!: Subscription;
   suscripcionAEliminarJugador!: Subscription;
+  creando = false;
 
   constructor(
     private jugadoresService: JugadoresService,
@@ -74,32 +75,69 @@ export class JugadoresComponent implements OnInit, OnDestroy {
       .subscribe(this.suscipcionAEliminarJugador);
   }
 
-  private suscipcionAEliminarJugador = () => {
-    next: {
-      this.getJugadoresDelEquipo();
-    }
-    error: {
-      this.cargando = false;
-      this.dialogoAbierto = false;
-    }
-  };
+  onEditarJugador(jugador: Jugador, e: MouseEvent) {
+    this.formularioDeJugador.controls['Nombre del Jugador'].setValue(
+      jugador['Nombre del Jugador']
+    );
+    this.formularioDeJugador.controls.id.setValue(jugador.id);
+    this.dialogoAbierto = true;
+    e.stopPropagation();
+  }
 
-  private suscripcionACrearJugador = () => {
-    next: {
-      this.cargando = false;
-      this.dialogoAbierto = false;
-      this.getJugadoresDelEquipo();
-    }
-    error: {
-      this.cargando = false;
-      this.dialogoAbierto = false;
-    }
-  };
+  editarJugador() {
+    this.cargando = true;
+    this.jugadoresService
+      .editarJugador(this.formularioDeJugador.value)
+      .subscribe((jugador: Jugador) => {
+        this.setEstadoARespuestaExitosa();
+        // if (this.jugadorSeleccionado?.id != null) {
+        //   this.router.navigate([
+        //     '/ligas',
+        //     this.idDeLaLiga,
+        //     'equipos',
+        //     jugador.id,
+        //     'jugadores',
+        //     {
+        //       nombreDelEquipo: jugador['Nombre del Jugador'],
+        //     },
+        //   ]);
+        // }
+      });
+  }
 
   getJugadoresDelEquipo() {
     this.jugadores = this.jugadoresService
       .getJugadoresDelEquipo(this.idDelEquipo)
       .pipe(shareReplay());
+  }
+
+  private suscipcionAEliminarJugador = () => {
+    next: {
+      this.getJugadoresDelEquipo();
+    }
+    error: {
+      this.setEstadoAError();
+    }
+  };
+
+  private suscripcionACrearJugador = () => {
+    next: {
+      this.setEstadoARespuestaExitosa();
+    }
+    error: {
+      this.setEstadoAError();
+    }
+  };
+
+  private setEstadoARespuestaExitosa() {
+    this.cargando = false;
+    this.dialogoAbierto = false;
+    this.getJugadoresDelEquipo();
+  }
+
+  private setEstadoAError() {
+    this.cargando = false;
+    this.dialogoAbierto = false;
   }
 
   private setFormulario() {

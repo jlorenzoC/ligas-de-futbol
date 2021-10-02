@@ -22,7 +22,7 @@
           icon="pi pi-plus"
           class="p-button-outlined p-button-rounded p-button-success"
           pTooltip="De alta a un jugador"
-          (click)="abrirDialogo()"
+          (click)="creando = true; abrirDialogo()"
         ></button>
       </div>
     </div>
@@ -41,6 +41,16 @@
         pButton
         pRipple
         type="button"
+        icon="pi pi-pencil"
+        class="p-button-outlined p-button-rounded p-button-success mr-2"
+        [pTooltip]="'Editar ' + jugador['Nombre del Jugador']"
+        tooltipPosition="left"
+        (click)="creando = false; onEditarJugador(jugador, $event)"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
         icon="pi pi-trash"
         class="p-button-outlined p-button-rounded p-button-danger mr-2"
         [pTooltip]="'Dar baja a ' + jugador['Nombre del Jugador']"
@@ -54,7 +64,7 @@
   [breakpoints]="{ '1200px': '40vw', '960px': '50vw', '640px': '100vw' }"
   [style]="{ width: '25vw' }"
   [modal]="true"
-  header="Crear jugador"
+  [header]="creando ? 'Crear jugador' : 'Editar jugador'"
   [(visible)]="dialogoAbierto"
 >
   <div class="text-center" *ngIf="cargando; else form">
@@ -86,10 +96,10 @@
         pButton
         pRipple
         type="button"
-        label="Crear"
-        icon="pi pi-plus"
+        [label]="creando ? 'Crear' : 'Guardar'"
+        [icon]="creando ? 'pi pi-plus' : 'pi pi-save'"
         class="p-button-outlined p-button-rounded p-button-success"
-        (click)="crearJugador()"
+        (click)="creando ? crearJugador() : editarJugador()"
       ></button>
     </ng-template>
   </ng-template>

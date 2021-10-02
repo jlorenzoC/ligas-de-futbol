@@ -63,6 +63,7 @@
           icon="pi pi-pencil"
           class="p-button-outlined p-button-rounded p-button-success mr-2"
           [pTooltip]="'Editar ' + equipo['Nombre del equipo']"
+          tooltipPosition="left"
           (click)="creando = false; onEditarEquipo(equipo, $event)"
         ></button>
         <button
