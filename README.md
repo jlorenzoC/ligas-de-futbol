@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development servers
 
-- **Fake api:** Install fake api server by an only one time execution of `npm install -g json-server`, and then, run `json-server --watch fake-database.json` every time you need your fake api available. The fake api will be exposed at `localhost:3000`. This server is powered by [json-server at NPM](https://www.npmjs.com/package/json-server), for more info on how it works, please check the link before.
+- **Fake api:** Install fake api server by an only one time execution of `npm install -g json-server`, and then, run `json-server --watch fake-database.json` every time you need to enable your fake api. The fake api will be exposed at `localhost:3000`. This server is powered by [json-server at NPM](https://www.npmjs.com/package/json-server), for more info on how it works, please check the link before.
 
 - **Source code:** Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
