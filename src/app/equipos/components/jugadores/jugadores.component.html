@@ -6,12 +6,12 @@
   responsiveLayout="scroll"
   [style]="{ width: '100%', height: '100%' }"
   [scrollable]="true"
-  scrollHeight="600px"
+  scrollHeight="calc(100% - 105.81px)"
   [loading]="(jugadores | async) == null"
 >
   <ng-template pTemplate="caption">
     <div class="flex gap justify-content-between">
-      <h2 class="text-sm md:text-lg">
+      <h2 class="text-lg md:text-2xl font-light ml-2">
         Jugadores del equipo {{ nombreDelEquipo }}
       </h2>
       <div>

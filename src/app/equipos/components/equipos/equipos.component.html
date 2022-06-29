@@ -7,7 +7,7 @@
     responsiveLayout="scroll"
     [style]="{ width: '100%', height: '100%' }"
     [scrollable]="true"
-    scrollHeight="600px"
+    scrollHeight="calc(100% - 105.81px)"
     [loading]="(equipos | async) == null"
   >
     <ng-template pTemplate="caption">
@@ -22,7 +22,7 @@
             routerLink="/ligas"
             pTooltip="Ver las ligas"
           ></button>
-          <h2 class="text-sm md:text-lg">
+          <h2 class="text-lg md:text-2xl font-light ml-2">
             Equipos de la liga {{ nombreDeLaLiga | async }}
           </h2>
         </div>
