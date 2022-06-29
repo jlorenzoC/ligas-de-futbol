@@ -1,4 +1,4 @@
-<div class="mt-5">
+<div class="w-full text-center">
   <button
     pButton
     pRipple
@@ -13,7 +13,7 @@
   ></button>
 </div>
 <div
-  class="ligas__buscador shadow-8 flex w-10 sm:w-6 justify-content-center"
+  class="ligas__buscador shadow-8 flex w-full md:w-10 lg:w-6 justify-content-center"
   *ngIf="buscarFichaDelJugador"
 >
   <i class="ligas__buscador--icono pi pi-search"></i>
@@ -23,7 +23,7 @@
     (completeMethod)="filtrarJugadores($event)"
     [field]="'Nombre del Jugador'"
     (onSelect)="setFichaDelJugador()"
-    placeholder="Buscar jugador ..."
+    placeholder="Buscar un jugador"
   ></p-autoComplete>
 </div>
 <p-card
@@ -44,7 +44,7 @@
   {{ equipoDelJugador["Nombre del equipo"] }}
 </p-card>
 <div
-  class="flex w-full h-full justify-content-center align-items-center"
+  class="flex w-full justify-content-center align-items-center"
   *ngIf="(ligas | async) == null; else dataView"
 >
   <p-progressSpinner></p-progressSpinner>
