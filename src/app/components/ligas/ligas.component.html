@@ -45,7 +45,7 @@
 </p-card>
 <div
   class="flex w-full justify-content-center align-items-center"
-  *ngIf="(ligas | async) == null; else dataView"
+  *ngIf="(ligas | async) === null && !buscarFichaDelJugador; else dataView"
 >
   <p-progressSpinner></p-progressSpinner>
 </div>
