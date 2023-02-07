@@ -1,4 +1,4 @@
-# Ligas de fútbol
+# Football soccer leagues
 
 Example application to manage football soccer leagues. The data the app feeds from, will be provided by a simulated API with the help of `json-server` server
 
