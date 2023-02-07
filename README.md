@@ -1,6 +1,6 @@
 # Ligas de fútbol
 
-Aplicación para gestionar unas ligas de fútbol. Los datos de los que se alimenta la app van a estar proveídos por una api simulada.
+Example application to manage football soccer leagues. The data that the app feeds from, will be provided by a simulated API with the help of `json-server` server
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
