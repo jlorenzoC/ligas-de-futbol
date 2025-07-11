@@ -1,6 +1,6 @@
 # Football soccer leagues
 
-Example application to manage football soccer leagues. The data the app feeds from, will be provided by a simulated API with the help of `json-server`
+Small CRUD application to manage sport leagues, teams and players. It was written with Angular and PrimeNG. The data the app feeds from, will be provided by a simulated API you need to run locally with the help of `json-server`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
