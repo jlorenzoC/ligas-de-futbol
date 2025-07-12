@@ -1,4 +1,4 @@
-# Football soccer leagues
+# Sport leagues CRUD
 
 ![](./ScreenRecording2025-07-11at7.08.25PM-ezgif.com-video-to-gif-converter.gif)
 
